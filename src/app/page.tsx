@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState } from "react";
@@ -83,7 +84,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {data[selectedCity].map((entry) => (
+            {data[selectedCity].map((entry, _index) => (
               <tr 
                 key={entry.month} 
                 className={entry.month === "Yearly Avg" ? "bg-gray-200 font-bold" : ""}
