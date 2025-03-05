@@ -14,10 +14,10 @@ interface MonthData {
 
 export default function Home() {
   const cities = ["Austin", "Dallas"];
-  const models = ["HYDROPACK S", "HYDROPACK", "HYDROPACK X"];
+  const models = ["Hydropack S", "Hydropack", "Hydropack X"];
 
   const [selectedCity, setSelectedCity] = useState("Austin");
-  const [selectedModel, setSelectedModel] = useState("HYDROPACK X");
+  const [selectedModel, setSelectedModel] = useState("Hydropack X");
 
   const data: Record<string, MonthData[]> = {
     Austin: [
@@ -83,7 +83,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {data[selectedCity].map((entry, index) => (
+            {data[selectedCity].map((entry) => (
               <tr 
                 key={entry.month} 
                 className={entry.month === "Yearly Avg" ? "bg-gray-200 font-bold" : ""}
@@ -93,8 +93,8 @@ export default function Home() {
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{entry.humidity}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{entry.awgEffectiveness}</td>
                 <td className={`px-4 py-2 whitespace-nowrap text-sm ${entry.month === "Yearly Avg" ? "font-bold text-blue-700" : "text-gray-700"}`}>
-                  {selectedModel === "HYDROPACK S" ? entry.hydropackS :
-                   selectedModel === "HYDROPACK" ? entry.hydropack :
+                  {selectedModel === "Hydropack S" ? entry.hydropackS :
+                   selectedModel === "Hydropack" ? entry.hydropack :
                    entry.hydropackX}
                 </td>
               </tr>
