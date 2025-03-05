@@ -132,7 +132,7 @@ export default function Home() {
               </tr>
             ))}
             <tr className="bg-gray-50 font-bold">
-              <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">Average</td>
+              <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">Yearly Averages</td>
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{avgTemperature.toFixed(1)}</td>
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{avgHumidity.toFixed(1)}</td>
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
