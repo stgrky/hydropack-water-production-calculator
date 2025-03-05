@@ -39,7 +39,7 @@ export default function Home() {
       { month: "September", humidity: 68, temperature: 79.6, awgEffectiveness: "82.50%", hydropackS: 54.5, hydropack: 108.9, hydropackX: 217.9 },
       { month: "October", humidity: 67, temperature: 69.9, awgEffectiveness: "64.60%", hydropackS: 42.7, hydropack: 85.3, hydropackX: 170.6 },
       { month: "November", humidity: 70, temperature: 59.6, awgEffectiveness: "50.90%", hydropackS: 33.6, hydropack: 67.2, hydropackX: 134.4 },
-      { month: "December", humidity: 70, temperature: 52.7, awgEffectiveness: "23.20%", hydropackS: 15.3, hydropack: 30.6, hydropackX: 61.3 },
+      { month: "December", humidity: 60, temperature: 52.7, awgEffectiveness: "23.20%", hydropackS: 15.3, hydropack: 30.6, hydropackX: 61.3 },
     ],
     Dallas: [
       { month: "January", humidity: 64, temperature: 51, awgEffectiveness: "16.00%", hydropackS: 10.6, hydropack: 21.1, hydropackX: 42.3 },
@@ -62,16 +62,18 @@ export default function Home() {
   const totalMonths = cityData.length;
 
   // Calculate averages for fixed columns.
-  const avgHumidity = cityData.reduce((acc, curr) => acc + curr.humidity, 0) / totalMonths;
   const avgTemperature = cityData.reduce((acc, curr) => acc + curr.temperature, 0) / totalMonths;
+  const avgHumidity = cityData.reduce((acc, curr) => acc + curr.humidity, 0) / totalMonths;
   const avgAwdEffectivenessNum =
     cityData.reduce((acc, curr) => acc + parseFloat(curr.awgEffectiveness.replace("%", "")), 0) / totalMonths;
   
   // Calculate the average for the active unit with an explicit type assertion.
   const avgUnit = cityData.reduce((acc, curr) => acc + (curr[selectedUnit] as number), 0) / totalMonths;
 
-  // Get the label for the active unit to display in the header.
+  // Get the label for the active unit.
   const activeUnitLabel = unitOptions.find(option => option.key === selectedUnit)?.label || "";
+  // Remove the unit measurement from the label for display in the header.
+  const unitName = activeUnitLabel.replace(" (gal)", "");
 
   return (
     <div className="min-h-screen bg-gray-100 p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -108,10 +110,10 @@ export default function Home() {
             <tr>
               {[
                 "Month",
-                "Humidity (°F)",
-                "Temperature (°F)",
-                "AWG Effectiveness",
-                activeUnitLabel,
+                "Average Temperature (°F)",
+                "Average Relative Humidity (°F)",
+                "Relative Production (%)",
+                `Estimated Daily Production per ${unitName} (Gal)`,
               ].map((header) => (
                 <th key={header} className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
                   {header}
@@ -123,16 +125,16 @@ export default function Home() {
             {cityData.map((entry) => (
               <tr key={entry.month}>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{entry.month}</td>
-                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{entry.humidity}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{entry.temperature}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{entry.humidity}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{entry.awgEffectiveness}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{entry[selectedUnit]}</td>
               </tr>
             ))}
             <tr className="bg-gray-50 font-bold">
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">Average</td>
-              <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{avgHumidity.toFixed(1)}</td>
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{avgTemperature.toFixed(1)}</td>
+              <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{avgHumidity.toFixed(1)}</td>
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
                 {avgAwdEffectivenessNum.toFixed(2)}%
               </td>
